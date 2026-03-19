@@ -31,7 +31,7 @@ GEM
       net-http (~> 0.5)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    json (2.18.1)
+    json (2.19.2)
     logger (1.7.0)
     manageiq-api-client (0.7.0)
       activesupport (>= 7.2, < 8.1)
