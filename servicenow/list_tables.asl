@@ -12,7 +12,6 @@
       "Parameters": {
         "instance_id.$": "$.dialog.dialog_instance_id",
         "query": "nameENDSWITHserver",
-        "limit": 5,
         "fields": "name,label"
       },
       "ResultPath": "$.values",
@@ -30,7 +29,7 @@
           "TransformItem": {
             "Type": "Pass",
             "Parameters": {
-              "transformed.$": "States.StringToJson(States.Format('\\{\"{}\":\"{}\"\\}', $.name, $.label))"
+              "transformed.$": "States.Array($.name, $.label)"
             },
             "OutputPath": "$.transformed",
             "End": true
