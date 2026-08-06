@@ -1,5 +1,5 @@
 {
-  "Comment": "List CMDB Tables",
+  "Comment": "List CMDB Tables with Transformed Output",
   "StartAt": "ListTables",
   "States": {
     "ListTables": {
@@ -15,7 +15,29 @@
         "limit": 5,
         "fields": "name,label"
       },
-      "ResultPath": "$.tables",
+      "ResultPath": "$.values",
+      "Next": "TransformResults"
+    },
+    "TransformResults": {
+      "Type": "Map",
+      "ItemsPath": "$.values.result",
+      "ItemProcessor": {
+        "ProcessorConfig": {
+          "Mode": "INLINE"
+        },
+        "StartAt": "TransformItem",
+        "States": {
+          "TransformItem": {
+            "Type": "Pass",
+            "Parameters": {
+              "transformed.$": "States.StringToJson(States.Format('\\{\"{}\":\"{}\"\\}', $.name, $.label))"
+            },
+            "OutputPath": "$.transformed",
+            "End": true
+          }
+        }
+      },
+      "ResultPath": "$.values",
       "End": true
     }
   }
